@@ -1,0 +1,14 @@
+{
+  "name": "opendevops-apache",
+  "version": "0.1.0",
+  "author": "Matthew Hansen",
+  "summary": "Puppet module for apache",
+  "license": "Apache 2.0",
+  "source": "https://github.com/opendevops/puppet-apache",
+  "project_page": "https://github.com/opendevops/puppet-apache",
+  "issues_url": "https://github.com/opendevops/puppet-apache/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
