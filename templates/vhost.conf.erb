@@ -1,0 +1,32 @@
+<VirtualHost *:80>
+  ServerName <%= @server_name %>
+
+  ## Vhost docroot
+  DocumentRoot "<%= @document_root %>"
+
+  ## Directories, there should at least be a declaration for /var/www/appserver1604
+
+  <Directory "<%= @document_root %>">
+    Options Indexes FollowSymlinks
+    AllowOverride All
+    Require all granted
+  </Directory>
+
+  # proxy fcgi module config for php-fpm
+  <LocationMatch "^(.*\.php)$">
+    ProxyPass fcgi://127.0.0.1:9000<%= @document_root %>
+  </LocationMatch>
+
+
+  ## Logging
+  ErrorLog "/var/log/apache2/<%= @server_name %>_error.log"
+  ServerSignature Off
+  CustomLog "/var/log/apache2/<%= @server_name %>_access.log" combined
+
+  ## SetEnv/SetEnvIf for environment variables
+  SetEnv APP_ENV dev
+  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+  ## Custom fragment
+#Redirect permanent / https://<%= @server_name %>/
+</VirtualHost>

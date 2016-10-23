@@ -1,5 +1,19 @@
 # apache
 
+example:
+
+```
+include apache
+apache::config { "apache_config": }
+apache::vhost { $dashboardDomain:
+  server_name   => "$dashboardDomain.dev",
+  document_root => "$wwwFolder/$dashboardDomain",
+  project_path  => $projectsFolder,
+}
+```
+
+
+
 #### Table of Contents
 
 1. [Overview](#overview)

@@ -23,19 +23,37 @@
 #
 # === Examples
 #
-#  class { 'apache':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#  }
+# include apache
+# apache::config { "apache_config": }
+# apache::vhost { $dashboardDomain:
+#   server_name   => "$dashboardDomain.dev",
+#   document_root => "$wwwFolder/$dashboardDomain",
+#   project_path  => $projectsFolder,
+# }
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Matthew Hansen
 #
 # === Copyright
 #
-# Copyright 2016 Your name here, unless otherwise noted.
+# Copyright 2016 Matthew Hansen
 #
 class apache {
 
+  # Install apache2 package
+  package { 'apache2':
+    ensure => installed,
+    require => Exec['apt-update']
+  }
 
+
+  # mods
+  apache::mods{ 'apache_mods': }
+
+  # delete purge /etc/apache2/sites-enabled/000-default.conf
+  # http://docs.puppetlabs.com/references/latest/type.html#tidy.
+  tidy { "remove-000-default":
+    path    => "/etc/apache2/sites-enabled/000-default.conf",
+  }
 }
